@@ -1,5 +1,6 @@
 from datetime import date
 from db.sqlite import SQLite
+import json
 import datetime
 import requests
 import pandas as pd
@@ -12,26 +13,21 @@ class Scrape:
     def __init__(self, url:str='https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search'):
         self.url = url
     
-    def proxysale():
-        
+    def proxysale(self):
         cookies = {
-            'JSESSIONID': '70B8B03895C2D41F4C587D9011F9F9B9',
             '_ga_PDN0GKXB6R': 'GS1.1.1709585778.1.0.1709585778.60.0.0',
             '_ym_uid': '1709585779239221843',
             '_ym_d': '1709585779',
             '_ga': 'GA1.2.2146692544.1709585779',
-            '_gid': 'GA1.2.1240199425.1709585779',
-            '_gat_UA-77454321-1': '1',
-            '_ym_isad': '1',
+            'JSESSIONID': '193325E20E3006F0EFE153AFB101CD78',
         }
 
         headers = {
             'authority': 'free.proxy-sale.com',
             'accept': 'application/json',
             'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-            'client-ip': '37.78.252.88',
+            'client-ip': '5.139.228.44',
             'content-type': 'application/json',
-            # 'cookie': 'JSESSIONID=70B8B03895C2D41F4C587D9011F9F9B9; _ga_PDN0GKXB6R=GS1.1.1709585778.1.0.1709585778.60.0.0; _ym_uid=1709585779239221843; _ym_d=1709585779; _ga=GA1.2.2146692544.1709585779; _gid=GA1.2.1240199425.1709585779; _gat_UA-77454321-1=1; _ym_isad=1',
             'origin': 'https://free.proxy-sale.com',
             'referer': 'https://free.proxy-sale.com/ru/http/',
             'sec-ch-ua': '"Chromium";v="122", "Not(A:Brand";v="24", "Google Chrome";v="122"',
@@ -61,20 +57,17 @@ class Scrape:
             json=json_data,
         )
 
+        return response
+    
+    def response_to_json(self, path:str, response):
+        with open(path, 'w', encoding='utf-8') as file:
+            json.dump(response.json(), file, indent=2)
 
-        # .json()
-        # return response['data'][0]['adv']['price']
-
-        # Note: json_data will not be serialized by requests
-        # exactly as it was in the original request.
-        #data = '{"page":0,"size":10,"countries":[],"proxyProtocols":["HTTP","HTTPS"],"proxyTypes":[]}'
-        #response = requests.post(
-        #    'https://free.proxy-sale.com/api/front/main/pagination/filtration',
-        #    cookies=cookies,
-        #    headers=headers,
-        #    data=data,
-        #)
-
+if __name__ == '__main__':
+    scraper = Scrape()
+    response = scraper.proxysale()
+    scraper.response_to_json('proxy.json', response)
+    
 
 
 
