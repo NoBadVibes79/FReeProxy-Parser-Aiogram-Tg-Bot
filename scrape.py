@@ -41,7 +41,7 @@ class Scrape:
 
         json_data = {
             'page': 0,
-            'size': 10,
+            'size': 100,
             'countries': [],
             'proxyProtocols': [
                 'HTTP',
