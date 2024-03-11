@@ -1,4 +1,7 @@
-#first_venv\Scripts\activate
+'''
+first_venv\Scripts\activate
+https://habr.com/ru/articles/732136/
+'''
 
 import asyncio
 import logging
